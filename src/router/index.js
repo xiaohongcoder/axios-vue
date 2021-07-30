@@ -48,6 +48,11 @@ const routes = [
     name: '创建 axios 实例',
     component: () => import('../views/3-1.vue')
   },
+  {
+    path: '/3-2',
+    name: '实例的相关配置',
+    component: () => import('../views/3-2.vue')
+  },
 ]
 
 const router = new VueRouter({
