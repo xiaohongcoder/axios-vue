@@ -33,6 +33,16 @@ const routes = [
     name: '2_3_put_patch',
     component: () => import('../views/2_3_put_patch.vue')
   },
+  {
+    path: '/2_4_delete',
+    name: '2_4_delete',
+    component: () => import('../views/2_4_delete.vue')
+  },
+  {
+    path: '/2_5',
+    name: '2_5',
+    component: () => import('../views/2_5.vue')
+  },
 ]
 
 const router = new VueRouter({
