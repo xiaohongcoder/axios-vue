@@ -40,8 +40,13 @@ const routes = [
   },
   {
     path: '/2_5',
-    name: '2_5',
+    name: 'axios并发请求',
     component: () => import('../views/2_5.vue')
+  },
+  {
+    path: '/3-1',
+    name: '创建 axios 实例',
+    component: () => import('../views/3-1.vue')
   },
 ]
 
