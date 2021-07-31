@@ -6,32 +6,44 @@
 </template>
 
 <script>
-// import axios from "axios";
-// import { Button } from "vant";
-import Vue from "vue";
+import axios from "axios";
 import { ContactList } from "vant";
-
-Vue.use(ContactList);
+import { Toast } from "vant";
 
 export default {
   name: "contactList",
+
   components: {
-    // [Button.name]: Button,
     [ContactList.name]: ContactList,
   },
+
   data() {
     return {
-      list: [
-        {
-          id: 1,
-          name: "name",
-          tel: "10010",
-          isDefault: false,
-        },
-      ],
+      list: [],
+
+      // axios 实例
+      instance: null,
     };
   },
-  created() {},
+
+  created() {
+    this.instance = axios.create({
+      baseURL: "http://localhost:9000/api",
+      timeout: 1000,
+    });
+
+    this.instance
+      .get("/contactList")
+      .then((res) => {
+        console.log(res);
+        this.list = res.data.data;
+      })
+      .catch((err) => {
+        console.log(err);
+        Toast('请稍后重试')
+      });
+  },
+
   methods: {
     // 添加联系人
     onAdd() {},
@@ -40,6 +52,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>
