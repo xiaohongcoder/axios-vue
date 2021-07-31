@@ -63,6 +63,11 @@ const routes = [
     name: '拦截器',
     component: () => import('../views/3-4.vue')
   },
+  {
+    path: '/3-5',
+    name: '错误处理',
+    component: () => import('../views/3-5.vue')
+  },
 ]
 
 const router = new VueRouter({

@@ -53,7 +53,7 @@ export default {
 
     // 真实开发的时候 是不会轻易取消的
 
-    // 栗子1 => 需要登录的接口 token
+    // 栗子 1 => 需要登录的接口 token
     // 给实例添加 interceptors
     // 而不是给 axios 添加 interceptors，会造成全局污染
     let instance = axios.create({});
@@ -62,22 +62,23 @@ export default {
       return config;
     });
 
-    // 栗子2 => 不需要登录的接口
+    // 栗子 2 => 不需要登录的接口
     // 给实例添加 interceptors
     // 而不是给 axios 添加 interceptors，会造成全局污染
-    let instance_new = axios.create({});
+    // 下面这行注释掉了，声明不使用就报错
+    // let instance_new = axios.create({});
 
-    // 栗子3 移动端开发
+    // 栗子 3 移动端开发
     let instance_phone = axios.create({});
     instance_phone.interceptors.request.use((config) => {
       // 在请求前 显示加载弹窗
-      $("#showLoading").show();
+      // $("#showLoading").show();
       return config;
     });
 
     instance_phone.interceptors.response.use((res) => {
       // 在响应后 隐藏加载弹窗
-      $("#showLoading").hide();
+      // $("#showLoading").hide();
       return res;
     });
   },
