@@ -42,7 +42,9 @@ export default {
       showEdit: false,
 
       // 正在编辑的联系人数据
-      editingcontact: {},
+      editingcontact: {
+        name: "1",
+      },
 
       // 新建 or 编辑
       // false 编辑 --- true 新建
@@ -54,31 +56,38 @@ export default {
 
   created() {
     console.log("created");
-    this.instance = axios.create({
-      baseURL: "http://localhost:9000/api",
-      timeout: 1000,
-    });
-
-    this.instance
-      .get("/contactList")
-      .then((res) => {
-        console.log(res);
-        this.list = res.data.data;
-      })
-      .catch((err) => {
-        console.log(err);
-        Toast("请稍后重试");
-      });
+    this.getContactList();
   },
 
   methods: {
+    // 获取 联系人列表
+    getContactList() {
+      this.instance = axios.create({
+        baseURL: "http://localhost:9000/api",
+        timeout: 1000,
+      });
+
+      this.instance
+        .get("/contactList")
+        .then((res) => {
+          console.log(res);
+          this.list = res.data.data;
+        })
+        .catch((err) => {
+          console.log(err);
+          Toast("请稍后重试");
+        });
+    },
+
     showPopup() {
       this.show = true;
-    },  
+    },
 
     // 添加联系人
     onAdd() {
       console.log("onAdd");
+      this.show = true;
+
       this.showEdit = true;
       this.isEdit = false;
     },
@@ -94,9 +103,47 @@ export default {
     },
 
     // 保存联系人
-    onSave() {},
+    onSave(info) {
+      if (this.isEdit) {
+        // 编辑保存
+        this.instance
+          .put("/contact/edit", {
+            info,
+          })
+          .then((res) => {
+            console.log(res);
+            if (res.data.code === 200) {
+              Toast("保存成功");
+              this.showEdit = false;
+              this.getContactList();
+            }
+          })
+          .catch(() => {
+            Toast("保存失败");
+          });
+      } else {
+        // 新建保存
+        this.instance
+          .post("/contact/new/json", {
+            info,
+          })
+          .then((res) => {
+            console.log(res);
+            if (res.data.code === 200) {
+              Toast("新建成功");
+              this.showEdit = false;
+              this.getContactList();
+            }
+          })
+          .catch(() => {
+            Toast("新建失败");
+          });
+      }
+    },
     // 删除联系人
-    onDelete() {},
+    onDelete(info) {
+      console.log(info);
+    },
   },
 };
 </script>
