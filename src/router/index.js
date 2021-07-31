@@ -73,6 +73,11 @@ const routes = [
     name: '取消请求',
     component: () => import('../views/3-6.vue')
   },
+  {
+    path: '/contactList',
+    name: 'contactList',
+    component: () => import('../views/contactList.vue')
+  },
 ]
 
 const router = new VueRouter({
