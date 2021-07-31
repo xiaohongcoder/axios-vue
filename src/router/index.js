@@ -58,6 +58,11 @@ const routes = [
     name: '常用参数配置 具体使用方法',
     component: () => import('../views/3-3.vue')
   },
+  {
+    path: '/3-4',
+    name: '拦截器',
+    component: () => import('../views/3-4.vue')
+  },
 ]
 
 const router = new VueRouter({
