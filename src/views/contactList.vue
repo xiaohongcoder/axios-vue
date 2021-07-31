@@ -1,10 +1,17 @@
 <template>
   <div class="contact-list">
+    <!-- 联系人列表 -->
     <van-contact-list :list="list" @add="onAdd" @edit="onEdit" />
 
-    <van-cell is-link @click="showPopup">展示弹出层</van-cell>
-    <van-popup v-model="show" :style="{ width: '90%' }">
+    <van-popup v-model="showEdit" :style="{ width: '90%' }">
       <!-- 联系人编辑 -->
+      <!-- <van-contact-edit
+        :contact-info="editingContact"
+        :is-edit="isEdit"
+        @save="onSave"
+        @delete="onDelete"
+      /> -->
+
       <van-contact-edit
         is-edit
         show-set-default
@@ -42,15 +49,11 @@ export default {
       showEdit: false,
 
       // 正在编辑的联系人数据
-      editingcontact: {
-        name: "1",
-      },
+      editingContact: {},
 
-      // 新建 or 编辑
-      // false 编辑 --- true 新建
+      // 添加 or 编辑
+      // false 添加 --- true 编辑
       isEdit: false,
-
-      show: false,
     };
   },
 
@@ -70,7 +73,7 @@ export default {
       this.instance
         .get("/contactList")
         .then((res) => {
-          console.log(res);
+          console.log(" => contactList", res);
           this.list = res.data.data;
         })
         .catch((err) => {
@@ -79,37 +82,31 @@ export default {
         });
     },
 
-    showPopup() {
-      this.show = true;
-    },
-
-    // 添加联系人
+    // 添加 联系人
     onAdd() {
       console.log("onAdd");
-      this.show = true;
 
       this.showEdit = true;
       this.isEdit = false;
     },
 
-    // 编辑联系人
+    // 编辑 联系人
     onEdit(info) {
-      console.log("onEdit");
-      this.show = true;
+      console.log("onEdit info", info);
 
       this.showEdit = true;
       this.isEdit = true;
-      this.editingcontact = info;
+      this.editingContact = info;
     },
 
     // 保存联系人
     onSave(info) {
+      console.log("onSave info", info);
       if (this.isEdit) {
         // 编辑保存
+        console.log("编辑保存");
         this.instance
-          .put("/contact/edit", {
-            info,
-          })
+          .patch("/contact/edit", info)
           .then((res) => {
             console.log(res);
             if (res.data.code === 200) {
@@ -122,11 +119,10 @@ export default {
             Toast("保存失败");
           });
       } else {
-        // 新建保存
+        // 添加保存
+        console.log("添加保存");
         this.instance
-          .post("/contact/new/json", {
-            info,
-          })
+          .post("/contact/new/json", info)
           .then((res) => {
             console.log(res);
             if (res.data.code === 200) {
@@ -142,7 +138,7 @@ export default {
     },
     // 删除联系人
     onDelete(info) {
-      console.log(info);
+      console.log("onDelete info", info);
     },
   },
 };
