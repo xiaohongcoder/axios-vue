@@ -68,6 +68,11 @@ const routes = [
     name: '错误处理',
     component: () => import('../views/3-5.vue')
   },
+  {
+    path: '/3-6',
+    name: '取消请求',
+    component: () => import('../views/3-6.vue')
+  },
 ]
 
 const router = new VueRouter({
