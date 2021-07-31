@@ -53,6 +53,11 @@ const routes = [
     name: '实例的相关配置',
     component: () => import('../views/3-2.vue')
   },
+  {
+    path: '/3-3',
+    name: '常用参数配置 具体使用方法',
+    component: () => import('../views/3-3.vue')
+  },
 ]
 
 const router = new VueRouter({
