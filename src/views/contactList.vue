@@ -85,7 +85,7 @@ export default {
       this.editingContact = info;
     },
 
-    // 保存联系人
+    // 保存 联系人
     async onSave(info) {
       console.log("onSave info", info);
       if (this.isEdit) {
@@ -119,9 +119,40 @@ export default {
         }
       }
     },
-    // 删除联系人
+
+    // 删除 联系人
     async onDelete(info) {
       console.log("onDelete info", info);
+
+      let res = await this.$Http.delContact({
+        id: info.id,
+      });
+
+      console.log(res);
+
+      if (res.code === 200) {
+        Toast("保存成功");
+        this.showEdit = false;
+        this.getList();
+      }
+
+      // this.instance
+      //   .delete("/contact", {
+      //     params: {
+      //       id: info.id,
+      //     },
+      //   })
+      //   .then((res) => {
+      //     console.log(res);
+      //     if (res.data.code === 200) {
+      //       Toast("删除成功");
+      //       this.showEdit = false;
+      //       this.getList();
+      //     }
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
     },
   },
 };
