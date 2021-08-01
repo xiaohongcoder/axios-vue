@@ -110,13 +110,13 @@ export default {
           .then((res) => {
             console.log(res);
             if (res.data.code === 200) {
-              Toast("保存成功");
+              Toast("编辑-保存成功");
               this.showEdit = false;
               this.getContactList();
             }
           })
           .catch(() => {
-            Toast("保存失败");
+            Toast("编辑-保存失败");
           });
       } else {
         // 添加保存
@@ -139,6 +139,25 @@ export default {
     // 删除联系人
     onDelete(info) {
       console.log("onDelete info", info);
+      this.instance
+        .delete("/contact", {
+          params: {
+            id: info.id,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.data.code === 200) {
+            Toast("删除成功");
+            this.showEdit = false;
+            this.getContactList();
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          this.showEdit = false;
+          Toast("删除失败");
+        });
     },
   },
 };
