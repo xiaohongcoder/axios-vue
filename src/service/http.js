@@ -43,6 +43,7 @@ for (let key in service) {
     // 开始进行请求
     // 不同请求的判断
     let response = null
+
     if (api.method === 'put' || api.method === 'post' || api.method === 'patch') {
 
       try {
@@ -55,17 +56,18 @@ for (let key in service) {
     } else if (api.method === 'delete' || api.method === 'get') {
 
       config.params = newParams
+
       try {
         response = await instance[api.method](api.url, config)
       } catch (err) {
         response = err
       }
 
-      // console.log(response);
-
-      return response
-
     }
+
+    console.log(response);
+
+    return response
 
     // let res = null
     // try {
